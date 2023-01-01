@@ -52,9 +52,9 @@ function animate() {
     player.update();
     player2.update();
 
-    player.velocity.x = 0;
-    if (keys.d.pressed === true) player.velocity.x = 1;
-        else if (keys.a.pressed === true) player.velocity.x = -1;
+    player.velocity.vx = 0;
+    if (keys.d.pressed === true) player.velocity.vx = 3;
+        else if (keys.a.pressed === true) player.velocity.vx = -3;
 }
 animate();
 window.addEventListener("keydown", (event) => { 
@@ -66,7 +66,7 @@ window.addEventListener("keydown", (event) => {
             keys.a.pressed = true;
             break;
         case "w":
-            player.velocity.y = -15;
+            player.velocity.vy = -15;
             break;
 
 }})
