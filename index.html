@@ -1,7 +1,27 @@
-<style>
-    body { 
-        background-color: black;
-     }
-</style>
-<canvas></canvas>
-<script src="index.js"></script>    
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Dreams Demo</title>
+		<style>
+			canvas {
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				background: transparent;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- The canvas for the panning background -->
+		<canvas>
+			Your browser does not support canvas. Please try again with a different browser.
+		</canvas>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js" integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="./js/audio.js"></script>
+        <script src="./js/data/collisions.js"></script>
+        <script src="./js/classes/CollisionBlock.js"></script>
+        <script src="./js/classes/Player.js"></script>
+        <script src="./js/classes/Sprite.js"></script>
+		<script src="index.js"></script>
+	</body>
+</html>

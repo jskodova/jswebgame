@@ -1,7 +1,6 @@
-
 const audio = {
     Main: new Howl({
-        src: "./audio/main.mp3",
+        src: "./audio/mainaudio.mp3",
         html5: true,
     })
 }
