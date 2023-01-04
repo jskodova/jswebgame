@@ -1,11 +1,25 @@
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext('2d');
 
-canvas.width = 1024;
-canvas.height = 576;
+canvas.width = 1536;
+canvas.height = 752;
 
 const gravity = 0.5;
 
+class Sprite {
+    constructor({position, imageSrc}) {
+        this.position = position;
+        this.image = new Image();
+        this.image.src = imageSrc;
+        }
+    draw() {
+        context.drawImage(this.image, this.position.x, this.position.y)
+    }  
+    update() {
+        console.log("bg loaded");
+        this.draw();
+    } 
+}
 class Player {
     constructor(x,y) { 
         this.position = { 
@@ -44,10 +58,24 @@ const keys = {
     }
 }
 
+const background = new Sprite({
+    position: {
+        x: 0,
+        y: 0,
+    },
+    imageSrc: "./images/bg.jpg",
+})
+
 function animate() {
     window.requestAnimationFrame(animate);
     context.fillStyle = "white";
     context.fillRect(0, 0, canvas.width, canvas.height);
+
+    context.save();
+    context.translate(0, -80);
+    context.scale(0.3, 0.3);
+    background.update();
+    context.restore();
 
     player.update();
     player2.update();
@@ -80,3 +108,9 @@ window.addEventListener("keyup", (event) => {
             break;
 
 }})
+let clicked = false;
+window.addEventListener("click", (event) => {
+    if (!clicked) {
+    audio.Main.play();
+    }
+ }) 
