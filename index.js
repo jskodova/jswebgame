@@ -4,47 +4,51 @@ const context = canvas.getContext('2d');
 canvas.width = 1536;
 canvas.height = 752;
 
+const floorCollisions2D = []
+for (let i=0; i < floorCollisions.length; i += 140) {
+    floorCollisions2D.push(floorCollisions.slice(i, i + 140));
+}
+
+const platformCollisions2D = []
+for (let i=0; i < platformCollisions.length; i += 140) {
+    platformCollisions2D.push(platformCollisions.slice(i, i + 140));
+}    
+
+const CollisionBlocks = []
+floorCollisions2D.forEach((row, y) => {
+    row.forEach((collision, x) => {
+        if (collision === 7846) {
+            console.log("drawing a block", y, x);
+            CollisionBlocks.push(
+                new CollisionBlock({ 
+                position: {
+                    x: x * 50,
+                    y: y * 50,
+                    } 
+                })
+            )
+        }
+    })
+})
+platformCollisions2D.forEach((row, y) => {
+    row.forEach((collision, x) => {
+        if (collision === 7846) {
+            console.log("drawing a block", y, x);
+            CollisionBlocks.push(
+                new CollisionBlock({ 
+                position: {
+                    x: x * 50,
+                    y: y * 50,
+                    } 
+                })
+            )
+        }
+    })
+})
+console.log(CollisionBlocks);
+
 const gravity = 0.5;
 
-class Sprite {
-    constructor({position, imageSrc}) {
-        this.position = position;
-        this.image = new Image();
-        this.image.src = imageSrc;
-        }
-    draw() {
-        context.drawImage(this.image, this.position.x, this.position.y)
-    }  
-    update() {
-        console.log("bg loaded");
-        this.draw();
-    } 
-}
-class Player {
-    constructor(x,y) { 
-        this.position = { 
-            x: x,
-            y: y
-        }        
-        this.velocity = { 
-            vx: 0,
-            vy: 1
-        }        
-        this.height = 100;
-    }        
-    draw() { 
-        context.fillStyle = "black";
-        context.fillRect(this.position.x, this.position.y, 100, this.height);
-    }
-    update() { 
-        this.draw();
-        this.position.y += this.velocity.vy;
-        this.position.x += this.velocity.vx;
-        if (this.position.y + this.height + this.velocity.vy < canvas.height) {
-            this.velocity.vy += gravity;
-        } else this.velocity.vy = 0;
-    }        
-}
 let y = 100;
 const player = new Player(0,0);
 const player2 = new Player(300,100);
@@ -63,7 +67,7 @@ const background = new Sprite({
         x: 0,
         y: 0,
     },
-    imageSrc: "./images/bg.jpg",
+    imageSrc: "./images/map.png",
 })
 
 function animate() {
@@ -72,9 +76,12 @@ function animate() {
     context.fillRect(0, 0, canvas.width, canvas.height);
 
     context.save();
-    context.translate(0, -80);
+    context.translate(0, -88);
     context.scale(0.3, 0.3);
     background.update();
+    CollisionBlocks.forEach(CollisionBlock => {
+        CollisionBlock.update();
+        });
     context.restore();
 
     player.update();
@@ -85,6 +92,7 @@ function animate() {
         else if (keys.a.pressed === true) player.velocity.vx = -3;
 }
 animate();
+
 window.addEventListener("keydown", (event) => { 
     switch (event.key) {
         case "d":
