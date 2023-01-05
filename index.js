@@ -5,21 +5,41 @@ canvas.width = 1536;
 canvas.height = 752;
 
 const floorCollisions2D = []
-for (let i=0; i < floorCollisions.length; i += 139) {
-    floorCollisions2D.push(floorCollisions.slice(i, i + 139));
+for (let i=0; i < floorCollisions.length; i += 140) {
+    floorCollisions2D.push(floorCollisions.slice(i, i + 140));
 }
+
+const platformCollisions2D = []
+for (let i=0; i < platformCollisions.length; i += 140) {
+    platformCollisions2D.push(platformCollisions.slice(i, i + 140));
+}    
 
 const CollisionBlocks = []
 floorCollisions2D.forEach((row, y) => {
     row.forEach((collision, x) => {
         if (collision === 7846) {
-            console.log("drawing a block");
+            console.log("drawing a block", y, x);
             CollisionBlocks.push(
                 new CollisionBlock({ 
                 position: {
                     x: x * 50,
                     y: y * 50,
-                    },  
+                    } 
+                })
+            )
+        }
+    })
+})
+platformCollisions2D.forEach((row, y) => {
+    row.forEach((collision, x) => {
+        if (collision === 7846) {
+            console.log("drawing a block", y, x);
+            CollisionBlocks.push(
+                new CollisionBlock({ 
+                position: {
+                    x: x * 50,
+                    y: y * 50,
+                    } 
                 })
             )
         }
@@ -56,14 +76,13 @@ function animate() {
     context.fillRect(0, 0, canvas.width, canvas.height);
 
     context.save();
-    context.translate(0, -80);
+    context.translate(0, -88);
     context.scale(0.3, 0.3);
     background.update();
+    CollisionBlocks.forEach(CollisionBlock => {
+        CollisionBlock.update();
+        });
     context.restore();
-
-    CollisionBlocks.forEach(collisionBlock => {
-    collisionBlock.update();
-    });
 
     player.update();
     player2.update();
